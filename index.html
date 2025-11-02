@@ -1,1 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CCET - Synchronized Blinking (Fullscreen)</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background-color: #FFA500;
+      animation: blink 1s infinite ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      font-size: 4rem;
+      font-weight: bold;
+      color: white;
+      text-shadow: 2px 2px 0 #000, 4px 4px 0 #555;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      background-color: white;
+      color: #FFA500;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:active {
+      opacity: 0.8;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    #fullscreen-btn {
+      position: fixed;
+      bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  CCET
+  <button id="fullscreen-btn" onclick="goFullscreen()">Go Fullscreen</button>
+
+  <script>
+    function goFullscreen() {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) { /* Safari */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE11 */
+        elem.msRequestFullscreen();
+      }
+      document.getElementById("fullscreen-btn").style.display = "none";
+    }
+
+    window.onload = function () {
+      const pageContent = document.documentElement.outerHTML;
+      const blob = new Blob([pageContent], { type: "text/html" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "ccet-blink-offline.html";
+      link.click();
+    };
+  </script>
+</body>
+  </html>
 
